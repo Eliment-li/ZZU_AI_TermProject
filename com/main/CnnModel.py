@@ -12,7 +12,7 @@ class TrainDataSet(Dataset):
 
     def __init__(self, filePath):
         file = pd.read_csv(filePath)
-        xdata = file.iloc[1:5000, 1].values
+        xdata = file.iloc[1:28000, 1].values
 
         x = []
         for i in range(len(xdata)):
@@ -26,7 +26,7 @@ class TrainDataSet(Dataset):
         # Scaler = StandardScaler();
         # xTrain = Scaler.fit_transform(x)
         self.xTrain=x
-        self.y = file.iloc[1:5000, 0].values
+        self.y = file.iloc[1:28000, 0].values
         self.yTrain = self.y
 
         # self.xTrain = torch.tensor(xTrain, dtype=torch.float32)
@@ -102,7 +102,7 @@ class Net(torch.nn.Module):
 
 model = Net()
 criterion = torch.nn.CrossEntropyLoss()
-optimizer = optim.SGD(model.parameters(), lr=0.1, momentum=0.5)
+optimizer = optim.SGD(model.parameters(),lr=0.1,momentum=0)#lr=0.1, momentum=0.5
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 model.to(device)
 trainDataSet = TrainDataSet(r'd:\project2_train.csv')
